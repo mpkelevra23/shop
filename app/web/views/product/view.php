@@ -7,7 +7,8 @@
                 <div class="left-sidebar">
                     <h2>Каталог</h2>
                     <div class="panel-group category-products">
-                        <?php foreach ($categories as $categoryItem): ?>
+                        <?php /** @var array $categories */
+                        foreach ($categories as $categoryItem): ?>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
@@ -33,7 +34,8 @@
                         <div class="col-sm-7">
                             <div class="product-information"><!--/product-information-->
                                 <img src="/template/images/product-details/new.jpg" class="newarrival" alt="" />
-                                <h2><?php echo $product['name'];?></h2>
+                                <h2><?php /** @var array $product */
+                                    echo $product['name'];?></h2>
                                 <p>Код товара: <?php echo $product['code'];?></p>
                                 <span>
                                     <span>US $<?php echo $product['price'];?></span>

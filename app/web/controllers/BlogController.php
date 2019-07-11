@@ -1,6 +1,8 @@
 <?php
 
-include_once ROOT . '/models/Blog.php';
+spl_autoload_register(function ($class_name) {
+    include(ROOT . '/models/' . $class_name . '.php');
+});
 
 class BlogController
 {

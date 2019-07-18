@@ -40,7 +40,7 @@
                                 <span>
                                     <span>US $<?php echo $product['price'];?></span>
                                     <label>Количество:</label>
-                                    <input type="text" value="3" />
+                                    <input type="text" value="1" />
                                     <button type="button" class="btn btn-fefault cart">
                                         <i class="fa fa-shopping-cart"></i>
                                         В корзину

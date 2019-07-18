@@ -96,4 +96,20 @@ class Product
         return $result;
     }
 
+    /**
+     * @param $idsArray
+     * @return array
+     */
+    public static function getProdustsByIds($idsArray)
+    {
+        $db = Db::getConnection();
+
+        $idsString = implode(',', $idsArray);
+
+        $sql = "SELECT `id`, `code`, `name`, `price` FROM product WHERE status='1' AND id IN ($idsString)";
+
+        $products = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+        return $products;
+    }
 }

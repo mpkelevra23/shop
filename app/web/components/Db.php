@@ -1,8 +1,15 @@
 <?php
 
+/**
+ * Class Db
+ * Компонент для работы с базой данных
+ */
 class Db
 {
-    
+    /**
+     * Устанавливает соединение с базой данных
+     * @return PDO
+     */
     public static function getConnection()
     {
         $paramsPath = ROOT . '/config/db_params.php';

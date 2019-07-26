@@ -12,11 +12,10 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a href="/category/<?php echo $categoryItem['id']; ?>"
+                                            <a href="/category/<?= $categoryItem['id']; ?>"
                                                class="<?php /** @var int $categoryId */
-                                               if ($categoryId == $categoryItem['id']) echo 'active'; ?>"
-                                            >
-                                                <?php echo $categoryItem['name']; ?>
+                                               if ($categoryId == $categoryItem['id']) echo 'active'; ?>">
+                                                <?= $categoryItem['name']; ?>
                                             </a>
                                         </h4>
                                     </div>
@@ -36,15 +35,19 @@
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <img src="<?php echo $product['image']; ?>" alt=""/>
-                                            <h2><?php echo $product['price']; ?>$</h2>
+                                            <a href="/product/<?= $product['id']; ?>">
+                                                <img src="<?= $product['image']; ?>" alt=""/>
+                                            </a>
+                                            <h2><?= $product['price']; ?>$</h2>
                                             <p>
-                                                <a href="/product/<?php echo $product['id']; ?>">
-                                                    <?php echo $product['name']; ?>
+                                                <a href="/product/<?= $product['id']; ?>">
+                                                    <?= $product['name']; ?>
                                                 </a>
                                             </p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
-                                                        class="fa fa-shopping-cart"></i>В корзину</a>
+                                            <a href="/cart/add/<?= $product['id']; ?>"
+                                               class="btn btn-default add-to-cart"
+                                               data-id="<?= $product['id']; ?>">
+                                                <i class="fa fa-shopping-cart"></i>В корзину</a>
                                         </div>
                                         <?php if ($product['is_new']): ?>
                                             <img src="/template/images/home/new.png" class="new" alt=""/>
@@ -61,7 +64,7 @@
                      * @var object $pagination
                      * @var int $total
                      */
-                    if ((int)$total['count'] > Product::SHOW_BY_DEFAULT) {
+                    if ((int)$total > Product::SHOW_BY_DEFAULT) {
                         echo $pagination->get();
                     } ?>
 

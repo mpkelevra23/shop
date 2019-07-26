@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class UserController
+ */
 class UserController
 {
     /**
@@ -8,38 +11,43 @@ class UserController
      */
     public function actionRegistration()
     {
-        $name = '';
-        $email = '';
-        $password = '';
+        // Переменные для формы
+        $name = false;
+        $email = false;
+        $password = false;
         $result = false;
 
+        // Обработка формы
         if (isset($_POST['submit'])) {
+            // Если форма отправлена
+            // Получаем данные из формы
             $name = $_POST['name'];
             $email = $_POST['email'];
             $password = $_POST['password'];
 
+            // Валидация полей
             if (!User::checkName($name)) {
                 $errors['name'] = 'Имя не должно быть короче 2-х символов';
             }
-
             if (!User::checkEmail($email)) {
                 $errors['email'] = 'Неправильный email';
             }
-
             if (!User::checkPassword($password)) {
                 $errors['password'] = 'Пароль не должен быть короче 6-ти символов';
             }
-
             if (User::checkEmailExists($email)) {
                 $errors['email'] = 'Такой email уже используется';
             }
 
             if (!isset($errors)) {
+                // Если ошибок нет
+                // Регистрируем пользователя
                 $result = User::registration($name, $email, $password);
             }
 
         }
 
+        // Подключаем вид
         require_once(ROOT . '/views/user/registration.php');
 
         return true;
@@ -51,13 +59,18 @@ class UserController
      */
     public function actionLogin()
     {
-        $email = '';
-        $password = '';
+        // Переменные для формы
+        $email = false;
+        $password = false;
 
+        // Обработка формы
         if (isset($_POST['submit'])) {
+            // Если форма отправлена
+            // Получаем данные из формы
             $email = $_POST['email'];
             $password = $_POST['password'];
 
+            // Флаг ошибок
             $errors = false;
 
             // Валидация полей
@@ -81,9 +94,9 @@ class UserController
                 // Перенаправляем пользователя в закрытую часть - кабинет
                 header("Location: /cabinet/");
             }
-
         }
 
+        // Подключаем вид
         require_once(ROOT . '/views/user/login.php');
 
         return true;

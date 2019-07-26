@@ -1,12 +1,12 @@
 <?php
 
-/*
+/**
+ * Class Pagination
  * Класс для генерации постраничной навигации
  */
 
 class Pagination
 {
-
     /**
      * Ссылок навигации на страницу
      * @var int
@@ -151,7 +151,7 @@ class Pagination
         }
 
         // Возвращаем
-        return array($start, $end);
+        return [$start, $end];
     }
 
     /**
@@ -183,5 +183,4 @@ class Pagination
         // Делим и возвращаем
         return ceil($this->total / $this->limit);
     }
-
 }

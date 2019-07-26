@@ -65,14 +65,18 @@
                         <ul class="nav navbar-nav">
                             <li><a href="/cart">
                                     <i class="fa fa-shopping-cart"></i> Корзина
-                                    <span id="cart-count">(<?php echo Cart::countItems(); ?>)</span>
+                                    <span id="cart-count"><?= Cart::countItems(); ?></span>
                                 </a>
                             </li>
                             <?php if (User::isGuest()): ?>
-                                <li><a href="/user/login/"><i class="fa fa-lock"></i> Вход</a></li>
+                                <li><a href="/user/login/"><i class="fa fa-sign-in"></i> Вход</a></li>
+                                <li><a href="/user/registration/"><i class=""></i> Регистрация</a></li>
                             <?php else: ?>
                                 <li><a href="/cabinet/"><i class="fa fa-user"></i> Аккаунт</a></li>
-                                <li><a href="/user/logout/"><i class="fa fa-unlock"></i> Выход</a></li>
+                                <li><a href="/user/logout/"><i class="fa fa-sign-out"></i> Выход</a></li>
+                                <?php if (AdminBase::checkAdmin()): ?>
+                                    <li><a href="/admin/"><i class=""></i> Админка</a></li>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </ul>
                     </div>

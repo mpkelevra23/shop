@@ -12,7 +12,7 @@
                     <?php if (isset($errors) && is_array($errors)): ?>
                         <ul>
                             <?php foreach ($errors as $error): ?>
-                                <li> - <?php echo $error; ?></li>
+                                <li> - <?= $error; ?></li>
                             <?php endforeach; ?>
                         </ul>
                     <?php endif; ?>
@@ -23,10 +23,10 @@
                         <form action="#" method="post">
                             <p>Ваша почта</p>
                             <input type="email" name="userEmail" placeholder="E-mail"
-                                   value="<?php echo $userEmail; ?>"/>
+                                   value="<?= $userEmail; ?>"/>
                             <p>Сообщение</p>
                             <input type="text" name="userText" placeholder="Сообщение"
-                                   value="<?php echo $userText; ?>"/>
+                                   value="<?= $userText; ?>"/>
                             <br/>
                             <input type="submit" name="submit" class="btn btn-default" value="Отправить"/>
                         </form>

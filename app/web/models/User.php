@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class User
+ * Модель для работы с пользователями
+ */
 class User
 {
     /**
@@ -11,13 +15,11 @@ class User
      */
     public static function registration($name, $email, $password)
     {
-
+        // Соединение с БД
         $db = Db::getConnection();
 
-        $sql = 'INSERT INTO user (name, email, password) '
-            . 'VALUES (:name, :email, :password)';
-
-        $result = $db->prepare($sql);
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare('INSERT INTO user (name, email, password) VALUES (:name, :email, :password)');
         $result->bindParam(':name', $name, PDO::PARAM_STR_CHAR);
         $result->bindParam(':email', $email, PDO::PARAM_STR_CHAR);
         $result->bindParam(':password', $password, PDO::PARAM_STR_CHAR);
@@ -34,13 +36,11 @@ class User
      */
     public static function edit($id, $name, $password)
     {
+        // Соединение с БД
         $db = Db::getConnection();
 
-        $sql = "UPDATE user 
-            SET name = :name, password = :password 
-            WHERE id = :id";
-
-        $result = $db->prepare($sql);
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare('UPDATE user SET name = :name, password = :password WHERE id = :id');
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->bindParam(':name', $name, PDO::PARAM_STR_CHAR);
         $result->bindParam(':password', $password, PDO::PARAM_STR_CHAR);
@@ -56,19 +56,20 @@ class User
      */
     public static function authentication($email, $password)
     {
+        // Соединение с БД
         $db = Db::getConnection();
 
-        $sql = 'SELECT * FROM user WHERE email = :email AND password = :password';
-
-        $result = $db->prepare($sql);
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare('SELECT * FROM user WHERE email = :email AND password = :password');
         $result->bindParam(':email', $email, PDO::PARAM_STR_CHAR);
         $result->bindParam(':password', $password, PDO::PARAM_STR_CHAR);
-
         $result->execute();
 
+        // Обращаемся к записи
         $user = $result->fetch();
 
         if ($user) {
+            // Если запись существует, возвращаем id пользователя
             return $user['id'];
         }
 
@@ -81,21 +82,36 @@ class User
      */
     public static function authorization($userId)
     {
+        // Записываем идентификатор пользователя в сессию
         $_SESSION['user'] = $userId;
     }
 
     /**
-     * Если сессия есть, вернем идентификатор пользователя
+     * Возвращает идентификатор пользователя, если он авторизирован. Иначе перенаправляет на страницу входа
      * @return mixed
      */
 
     public static function checkLogged()
     {
+        // Если сессия есть, вернем идентификатор пользователя
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
         }
 
         header("Location: /user/login");
+    }
+
+    /**
+     * Проверяет телефон: не меньше, чем 10 символов
+     * @param $phone
+     * @return bool
+     */
+    public static function checkPhone($phone)
+    {
+        if (strlen($phone) >= 10) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -150,19 +166,18 @@ class User
     }
 
     /**
-     * Проверяем email по базе
+     * Проверяет не занят ли email другим пользователем
      * @param $email
      * @return bool
      */
 
     public static function checkEmailExists($email)
     {
-
+        // Соединение с БД
         $db = Db::getConnection();
 
-        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
-
-        $result = $db->prepare($sql);
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare('SELECT COUNT(*) FROM user WHERE email = :email');
         $result->bindParam(':email', $email, PDO::PARAM_STR_CHAR);
         $result->execute();
 
@@ -172,23 +187,20 @@ class User
     }
 
     /**
-     * Достаём информацию о пользователе из бд
+     * Возвращает пользователя с указанным id
      * @param $id
      * @return mixed
      */
     public static function getUserById($id)
     {
-        if ($id) {
-            $db = Db::getConnection();
-            $sql = 'SELECT * FROM user WHERE id = :id';
+        // Соединение с БД
+        $db = Db::getConnection();
 
-            $result = $db->prepare($sql);
-            $result->bindParam(':id', $id, PDO::PARAM_INT);
-            $result->execute();
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare('SELECT * FROM user WHERE id = :id');
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
 
-            return $result->fetch(PDO::FETCH_ASSOC);
-        }
-
-
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 }

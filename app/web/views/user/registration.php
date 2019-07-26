@@ -14,6 +14,10 @@
                             <p><?= $errors['name']; ?></p>
                         <?php endif; ?>
                         <input type="text" name="name" placeholder="Имя" value="<?= $name; ?>"/>
+                        <?php if (isset($errors['email'])): ?>
+                            <p><?= $errors['email']; ?></p>
+                        <?php endif; ?>
+                        <input type="text" name="email" placeholder="Email" value="<?= $email; ?>"/>
                         <?php if (isset($errors['password'])): ?>
                             <p><?= $errors['password']; ?></p>
                         <?php endif; ?>

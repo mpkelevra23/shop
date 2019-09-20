@@ -39,6 +39,6 @@ class Transfer
     public static function getTranslate($string)
     {
         //должен быть установлен пакет mbstring
-        return str_replace(' ', '_', strtr(mb_strtolower(trim($string)), self::$alphabet));
+        return str_replace([' ', '-'], '_', strtr(mb_strtolower(trim($string)), self::$alphabet));
     }
 }

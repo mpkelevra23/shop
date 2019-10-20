@@ -107,8 +107,6 @@ class UserController
      */
     public function actionLogout()
     {
-        session_start();
-
         // Удаляем все переменные сессии.
         $_SESSION = [];
 
@@ -126,5 +124,4 @@ class UserController
         session_destroy();
         header('Location: /');
     }
-
 }

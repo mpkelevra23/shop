@@ -24,5 +24,4 @@ abstract class AdminBase
             return true;
         } else return false;
     }
-
 }
